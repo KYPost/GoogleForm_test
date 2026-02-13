@@ -1,0 +1,877 @@
+/* 全域基礎設定 */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000000; /* 預設背景為黑色 */
+}
+
+/* 隱藏 Chrome, Safari, Edge 的滾動條 */
+.main-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+/* 隱藏 Firefox 的滾動條 */
+.main-wrapper {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+body {
+  font-family: "Noto Sans TC", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100dvh;
+}
+
+/* 建立一個主容器，用來承載背景圖與表單 */
+.main-wrapper {
+  width: calc(100dvh * (390 / 659));
+  min-height: 100dvh; /* 改為最小高度，讓內容可以撐開 */
+
+  /* 避免在極端窄的手機上爆出去 */
+  max-width: 100vw;
+
+  background-color: #ffffff;
+  background-image: url("img/Top_BG_bottom@3x.png");
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: 100% auto; /* 寬度撐滿容器，高度自適應 */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  overflow-y: auto; /* 讓內容超出時可以滾動 */
+  position: relative;
+}
+
+.header {
+  width: 100%; /* 讓容器佔滿主區塊寬度 */
+  max-width: 500px; /* 配合你之前的 500px 限制 */
+
+  /* 啟動 Flexbox 排版 */
+  display: flex;
+  /* 水平置中 */
+  justify-content: center;
+  /* 垂直置中（如果 header 有高度的話） */
+  align-items: center;
+
+  margin: 0 auto; /* 確保 header 容器本身在頁面置中 */
+  padding: 6vh 0; /* 給 Logo 上下留一點空間 */
+}
+
+.header img {
+  width: 70%; /* 限制 Logo 寬度不要撐滿，比較美觀 */
+  height: auto; /* 維持比例 */
+}
+
+/* 當視窗寬度高於 500px 時的設定 */
+@media (min-width: 400px) {
+  .main-wrapper {
+    width: 500px; /* 將主體鎖定在 500px */
+    /* 左右兩側會因為 body 的 flex 居中而自動露出黑框 */
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5); /* 增加一點陰影讓邊界更明顯 */
+  }
+}
+
+.header-text {
+  color: #e06c3a;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 5px;
+  margin-top: -50px;
+  margin-bottom: 20px;
+}
+
+/* 第一行：恭喜完成集章 */
+.line-1 {
+  /* 英文用 Arial (如有英文字), 中文用思源黑體 */
+  font-family: "Arial", "Noto Sans TC", sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+
+  /* 設定較寬的字距 */
+  letter-spacing: 0.1em;
+
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+/* 針對拆開後的兩行文字設定 */
+.sub-text-top,
+.sub-text-bottom {
+  font-family: "Arial", "Noto Sans TC", sans-serif;
+  font-size: 16px; /* 調整字體大小 */
+  font-weight: 700; /* 粗體 */
+  letter-spacing: 0.05em; /* 設定字距 */
+  line-height: 1.5; /* 調整行與行之間的距離 */
+
+  color: #3e3a39;
+}
+
+/* 如果你希望第二行字距再寬一點，可以單獨寫 */
+.sub-text-bottom {
+  letter-spacing: 0.08em;
+}
+.title {
+  font-family: "Arial", "Noto Sans TC", sans-serif;
+  font-weight: 300;
+  color: #e06c3a;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 5px;
+  margin-bottom: 20px;
+  margin-top: -15px;
+}
+
+.form-container {
+  background-color: rgba(255, 255, 255, 0.8);
+  /* 毛玻璃模糊效果 */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* 支援 Safari 瀏覽器 */
+
+  border: 2px solid #e06c3a;
+  border-radius: 40px;
+  padding: 40px 50px;
+  width: 100%; /* 在 500px 內佔 90% */
+  max-width: 450px;
+  margin-top: 10px;
+  margin-bottom: 100px;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+@media screen and (max-width: 500px) {
+  .form-container {
+    padding: 30px 20px;
+    width: 90%;
+  }
+}
+
+label,
+custom-select-wrapper {
+  color: #e06c3a;
+  font-size: 14px;
+  letter-spacing: calc(2px + 0.2dvw);
+  font-weight: 500;
+  display: block;
+  margin: 15px 0 5px;
+}
+
+label .en-text {
+  color: #999999; /* 括弧與英文：灰色 */
+  font-weight: 400; /* Regular，稍微細一點更有層次感 */
+  font-size: 0.9em; /* 稍微縮小一點點 */
+}
+
+/* 修改「請選擇...」所在的容器文字 */
+#selectedValue {
+  /* 1. 設定字體（這裡同樣遵循中英分開邏輯） */
+  font-family: "Arial", "Noto Sans TC", sans-serif;
+  font-weight: 400; /* Regular */
+  font-size: 14px;
+  letter-spacing: calc(0.3px + 0.1dvw);
+
+  /* 2. 預設顏色（建議用淡淡的灰色，代表尚未選擇） */
+  color: #999999;
+
+  /* 3. 防止文字太長超出框框 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+/* 特別調緊字距的設定 */
+.tight-label {
+  letter-spacing: calc(2px + 0.1dvw); /* 負值會讓字變得更緊 */
+}
+
+.tight-label-UnifiedBusinessNumber {
+  letter-spacing: calc(2px + 0.05dvw); /* 負值會讓字變得更緊 */
+}
+
+@media screen and (max-width: 500px) {
+  .tight-label-UnifiedBusinessNumber {
+    letter-spacing: calc(1px + 0.05dvw); /* 負值會讓字變得更緊 */
+  }
+}
+
+/* 額外小技巧：當選好選項後，透過 JS 切換成較深的顏色 */
+#selectedValue.selected {
+  color: #e06c3a; /* 選好後變成橘色或深灰色 */
+  font-weight: 500; /* 選好後變稍微粗一點 */
+  letter-spacing: calc(0.5px + 0.1dvw); /* 選好後恢復正常字距 */
+}
+
+/* 自定義選單樣式 */
+.custom-select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.select-box {
+  background-color: #fff2e8;
+  border-radius: 10px;
+  padding: 12px;
+  min-height: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  color: #e06c3a;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 9px solid #e06c3a;
+
+  /* 關鍵：加入過渡動畫 */
+  /* 優化過渡效果：更利落的物理曲線 */
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* 確保啟用硬體加速，防止動畫過程中的鋸齒或閃爍 */
+  will-change: transform;
+  transform-origin: center center; /* 確保繞著中心轉 */
+}
+
+/* 當外層 select-box 被加上 .open 類別時，箭頭旋轉 180 度 */
+.select-box.open .arrow-down {
+  transform: rotate(180deg);
+}
+
+.options-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1.5px solid #e06c3a;
+  border-radius: 10px;
+  margin-top: 5px;
+  padding: 0;
+  list-style: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  max-height: 250px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  /* --- 動畫關鍵設定 --- */
+  display: block; /* 必須維持 block 才能有動畫 */
+  opacity: 0; /* 預設透明 */
+  visibility: hidden; /* 預設隱藏（避免透明時還能被點到） */
+  transform: translateY(-10px); /* 預設向上偏移 10px */
+  transition:
+    opacity 0.4s ease-out,
+    transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    visibility 0.4s;
+
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+/* 當外層 .select-box 被加上 .open 類別時的狀態 */
+.select-box.open + .options-list {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0); /* 回到原位 */
+}
+
+/* 2. 自定義捲動條樣式 */
+.options-list::-webkit-scrollbar {
+  width: 10px; /* 寬度設寬一點，方便我們在裡面做「留白」 */
+}
+
+.options-list::-webkit-scrollbar-track {
+  background: transparent; /* 軌道透明，才不會看到一條灰色的槓 */
+}
+
+.options-list::-webkit-scrollbar-thumb {
+  /* 3. 使用透明邊框來擠壓滑塊，創造不貼邊的假象 */
+  background-color: rgba(224, 108, 58, 0.4);
+  border-radius: 10px;
+
+  /* 關鍵：利用透明邊框當作「推力」 */
+  /* 這裡的 3px 就是捲動條離右邊框的距離 */
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+.options-list::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(224, 108, 58, 0.7);
+}
+
+.options-list li {
+  padding: 12px 15px;
+  color: #e06c3a;
+  cursor: pointer;
+  border-bottom: 1px solid #ffdecb;
+  transition: background 0.2s; /* 增加滑過的平滑感 */
+}
+
+/* 移除最後一個選項的底線 */
+.options-list li:last-child {
+  border-bottom: none;
+}
+
+.options-list li:hover {
+  background-color: #ffe5cc; /* 懸浮顏色 */
+}
+
+/* 統一修改所有輸入框的提示文字 */
+input::placeholder {
+  color: #cccccc; /* 淺灰色 */
+  font-family: "Arial", "Noto Sans TC", sans-serif;
+  font-size: 14px;
+  letter-spacing: calc(0.3px + 0.1dvw); /* 也可以調整字寬 */
+  opacity: 1; /* 部分瀏覽器（如 Firefox）會預設降低透明度，建議設為 1 */
+}
+
+/* 如果你想要針對「統一編號」這個欄位做特別的顏色 */
+input[name="entry.22334455"]::placeholder {
+  color: #e06c3a; /* 讓它帶一點橘色，提醒使用者必填 */
+}
+
+.consent-container {
+  margin-top: 30px;
+  text-align: center;
+  width: 100%;
+}
+
+.checkbox-row {
+  display: inline-flex; /* 讓它根據內容縮放，text-align: center 就會對它起作用 */
+  align-items: center;
+  gap: 10px;
+}
+
+/* 1. 隱藏原生勾選框 */
+#consentCheck {
+  display: none;
+}
+
+/* 2. 利用 Label 的偽元素製作自定義方框 */
+.consent-label {
+  position: relative;
+  padding-left: 30px; /* 留出放方框的空間 */
+  display: block;
+  color: #e06c3a;
+  font-size: 14px;
+  letter-spacing: calc(0.5px + 0.05dvw);
+  line-height: 20px; /* 讓文字行高與方框高度一致，就能絕對置中 */
+}
+
+@media screen and (max-width: 500px) {
+  .consent-label {
+    font-size: 13px;
+    padding-left: 30px; /* 小螢幕時方框也縮小一點 */
+    letter-spacing: calc(0.1px + 0.1dvw);
+  }
+}
+
+#consentCheck {
+  display: none;
+}
+
+.consent-label {
+  position: relative;
+  padding-left: 35px; /* 為方框留出空間 */
+  cursor: pointer;
+  display: inline-block;
+  line-height: 24px;
+  transition: color 0.3s ease;
+  user-select: none; /* 防止文字被選取 */
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+.consent-label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #e06c3a; /* 你的主題橘 */
+  background: #fff;
+  border-radius: 4px; /* 微圓角比較精緻 */
+  transition: all 0.3s ease;
+}
+
+.consent-label::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 3px;
+  width: 6px;
+  height: 11px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0); /* 預設縮小隱藏 */
+  transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46); /* 彈跳效果 */
+}
+
+#consentCheck:checked + .consent-label::before {
+  background: #ef5b00; /* 變成實心橘色 */
+  border-color: #ef5b00;
+}
+
+#consentCheck:checked + .consent-label::after {
+  transform: rotate(45deg) scale(1); /* 勾勾彈出來 */
+}
+
+.consent-label.error-text::before {
+  border-color: #ff4d4d !important;
+  background-color: #fff0f0 !important;
+}
+
+.consent-divider {
+  border: 0.5px solid #e06c3a;
+  width: 100%;
+  margin: 15px 0;
+}
+
+.modal-trigger {
+  color: #1a237e; /* 圖中的深藍色 */
+  font-size: 12px;
+  letter-spacing: calc(0.5px + 0.1dvw);
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+.modal-overlay {
+  /* 關鍵修正：不能用 display: none，否則動畫會失效 */
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+
+  /* 動畫設定 */
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s;
+
+  /* 防止點擊穿透 */
+  pointer-events: none;
+}
+
+/* 當有 .show 時，才允許點擊並顯示 */
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background: white;
+  width: 85%;
+  max-width: 400px;
+  padding: 30px;
+  border-radius: 20px;
+  position: relative;
+  max-height: 70vh;
+  overflow-y: auto;
+
+  /* 隱藏滾輪 */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  /* --- 內容彈出動畫：初始縮小並稍微往下掉一點點 --- */
+  transform: scale(0.8) translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform; /* 優化手機端效能 */
+}
+
+/* 當 Overlay 顯示時，內容回到原位並縮放回 1 */
+.modal-overlay.show .modal-content {
+  transform: scale(1) translateY(0);
+}
+
+/* 確保內部圖片不超過寬度 */
+.consent-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.modal-content::-webkit-scrollbar {
+  display: none;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 30px;
+  cursor: pointer;
+  color: #e06c3a;
+}
+
+.consent-img {
+  width: 100%;
+  height: auto; /* 等比例縮放，寬度撐滿 */
+  display: block;
+}
+
+/* 送出按鈕 */
+.submit-btn {
+  background: linear-gradient(135deg, #ff8b43 0%, #ef5b00 100%);
+  color: white;
+  border: none;
+  border-radius: 40px;
+  font-size: 25px;
+  font-weight: 700;
+  padding: 10px 40px; /* 增加一點垂直高度比較好按 */
+  cursor: pointer;
+
+  /* 改為相對位置確保不會被擋住 */
+  position: relative;
+  z-index: 10;
+
+  margin: -50px auto 120px; /* 讓按鈕在表單底部置中並留白 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  letter-spacing: 0.5em; /* 稍微縮小字距，避免在小螢幕爆開 */
+  text-indent: 0.5em;
+  transition:
+    transform 0.2s,
+    background 0.3s;
+}
+
+.submit-btn:active {
+  transform: scale(0.95); /* 點擊時縮小一下，更有按鈕的回饋感 */
+}
+
+.submit-btn:hover {
+  background-color: #d45100;
+}
+
+/* 修改輸入框的字體與打字顏色 */
+/* --- 第一層：通用樣式 (所有 input 都套用) --- */
+input {
+  font-family: "Noto Sans TC", sans-serif;
+  font-size: 16px;
+  color: #e06c3a;
+  font-weight: 500;
+  letter-spacing: calc(0.5px + 0.1dvw);
+  outline: none;
+  box-sizing: border-box; /* 確保 padding 不會撐開寬度 */
+}
+
+/* --- 第二層：特定輸入框的形狀與背景 (寬度、圓角、預設背景) --- */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select {
+  /* 建議把 select 也拉進來統一 */
+  width: 100%;
+  background-color: #fff2e8; /* 預設淡橘色 */
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  padding: 12px;
+  transition: all 0.3s ease;
+}
+
+/* --- 第三層：互動狀態 (Focus) --- */
+/* 使用屬性選擇器確保能壓過上面的預設背景 */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+select:focus {
+  background-color: #ffffff;
+  border-color: #ef5b00;
+  box-shadow: 0 0 8px rgba(239, 91, 0, 0.2);
+}
+
+/* --- 第四層：錯誤狀態 (最高優先權) --- */
+/* 加上屬性選擇器 + .class + !important 確保絕對變色 */
+input[type="text"].input-error,
+input[type="email"].input-error,
+input[type="tel"].input-error,
+select.input-error {
+  border: 1.5px solid #ff4d4d !important;
+  background-color: #fff0f0 !important;
+}
+
+/* 1. 當瀏覽器自動填入時，預設顯示你原本的淺橘色底 (#fff2e8) */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #fff2e8 inset; /* 預設淺橘 */
+  -webkit-text-fill-color: #e06c3a;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* 2. 當自動填入的框「被點擊 (Focus)」時，變回白色背景 (#ffffff) */
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset; /* 變回白色 */
+  -webkit-text-fill-color: #e06c3a;
+}
+
+/* 3. 同時確保你的 border 效果依然有效 */
+input:-webkit-autofill:focus {
+  border: 1px solid #ef5b00;
+  background-color: #ffffff; /* 針對非 Webkit 瀏覽器的備份 */
+}
+/* 針對同意書的錯誤樣式：不加邊框，而是讓文字變紅 */
+.consent-error .consent-label {
+  color: #ff4d4d;
+  font-weight: 700;
+}
+
+/* 下拉選單錯誤樣式 */
+.select-error {
+  border: 1.5px solid #ff4d4d;
+}
+
+.swal-stylish-popup {
+  width: 400px !important; /* 固定寬度 */
+  background: #fffcfb !important;
+  border-radius: 30px !important;
+  padding: 1rem !important;
+  box-shadow: 0 15px 35px rgba(239, 91, 0, 0.1) !important;
+}
+
+.swal-stylish-title {
+  font-size: 24px !important;
+  letter-spacing: 2px !important;
+  color: #e06c3a !important;
+  margin-bottom: 20px !important;
+  font-weight: bold !important;
+}
+
+/* 內文容器 */
+.swal-custom-container {
+  text-align: left;
+  padding: 10px 10px 0;
+}
+
+.swal-subtitle {
+  color: #888;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+/* 錯誤列表項目 */
+.swal-error-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.swal-error-list li {
+  background: #fff;
+  border-left: 4px solid #ff4d4d; /* 錯誤提示紅條 */
+  margin-bottom: 8px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+  color: #555;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.swal-error-list li::before {
+  content: "✕";
+  color: #ff4d4d;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+/* 按鈕美化 */
+.swal-stylish-button {
+  width: 100%; /* 滿版按鈕更適合手機 */
+  max-width: 200px;
+  height: 50px;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgba(239, 91, 0, 0.3); /* 按鈕陰影 */
+  padding: 0px 40px;
+  letter-spacing: calc(2px + 0.1dvw);
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 500px) {
+  .swal-stylish-popup {
+    width: 95% !important; /* 手機版佔滿 90% 螢幕 */
+    padding: 1rem !important; /* 縮小內邊距，不浪費空間 */
+    border-radius: 20px !important;
+  }
+
+  .swal-stylish-title {
+    font-size: 20px !important; /* 標題稍微縮小 */
+    letter-spacing: 1px !important;
+  }
+
+  .swal-custom-container {
+    font-size: 14px !important; /* 內文稍微縮小 */
+  }
+
+  .swal-error-item {
+    padding: 10px 12px; /* 列表項目更緊湊 */
+    font-size: 14px;
+  }
+}
+
+.swal-stylish-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 12px rgba(239, 91, 0, 0.4);
+}
+
+/* --- 共通基礎樣式 --- */
+.swal-base-popup {
+  width: 350px;
+  padding: 20px 10px; /* 增加上下間距 */
+  border-radius: 40px; /* 依照圖片使用較大圓角 */
+}
+
+.swal-base-button {
+  width: 100%;
+  max-width: 220px;
+  height: 50px;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+/* --- 錯誤視窗專用 (Error) --- */
+.swal-error-title {
+  font-size: 22px;
+  letter-spacing: 3px;
+  color: #ee6c1a; /* 圖片中的橘色標題 */
+}
+
+.swal-error-item {
+  background: #fff;
+  border-left: 5px solid #ff5a5a; /* 紅色裝飾條 */
+  margin-bottom: 10px;
+  padding: 12px 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  color: #555;
+  display: flex;
+  align-items: center;
+}
+
+.swal-error-button {
+  background: linear-gradient(to right, #f46205, #ff7e30);
+  box-shadow: 0 4px 15px rgba(244, 98, 5, 0.3);
+  color: white;
+}
+
+/* --- 成功視窗專用 (Success) --- */
+.swal-success-title {
+  font-size: 22px;
+  letter-spacing: 3px;
+  font-size: 26px;
+  font-weight: 600;
+  color: #a5dc86; /* 成功綠色 */
+}
+
+/* 專屬：成功視窗的內文樣式 */
+.swal-success-content {
+  font-size: 16px; /* 文字大小 */
+  color: #666666; /* 文字顏色（深灰色） */
+  letter-spacing: 1px; /* 字距 */
+  line-height: 1.6; /* 行高，讓文字不擁擠 */
+  margin-top: 15px; /* 與標題的距離 */
+  font-weight: 400;
+}
+
+.swal-success-button {
+  background: linear-gradient(135deg, #b4f091 0%, #7fc45c 100%);
+  padding: 10px 40px;
+  letter-spacing: 4px;
+  box-shadow: 0 4px 15px rgba(165, 220, 134, 0.3);
+  color: white;
+}
+
+/* Loading 專用：彈窗主體 - 加入柔和陰影與呼吸感 */
+.swal-loading-popup {
+  width: 320px !important;
+  border-radius: 40px !important; /* 配合錯誤視窗的大圓角 */
+  padding: 40px 20px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important; /* 水平居中關鍵 */
+  justify-content: center !important;
+}
+
+.swal-loading-popup .swal2-loader {
+  display: flex !important;
+  border: 4px solid rgba(239, 91, 0, 0.15) !important;
+  /* 上、下兩邊上色，左右留底色 */
+  border-top: 4px solid #ef5b00 !important;
+  border-bottom: 4px solid #ef5b00 !important;
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 50% !important;
+  animation: swal2-rotate-loading 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite !important;
+  padding: 10px !important;
+}
+
+/* Loading 標題 - 強化精緻度 */
+.swal-loading-title {
+  color: #6b2b00 !important; /* 標題用深灰，橘色留給圈圈，視覺更平衡 */
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  letter-spacing: 3px !important;
+  margin: 0 0 10px 0 !important;
+}
+
+/* Loading 內文 - 弱化色彩增加層次 */
+.swal-loading-content {
+  color: #a0a0a0 !important;
+  font-size: 14px !important;
+  letter-spacing: 0.5px !important;
+  margin: 0 !important;
+  line-height: 1.4 !important;
+}
+
+/* 確保全域 loader 預設隱藏 */
+.swal2-loader {
+  display: none;
+}
+/* 3. 確保驗證視窗的 Icon（驚嘆號）是正常的，不會被干擾 */
+.swal-stylish-popup .swal2-icon {
+  display: flex;
+}
+
+/* 額外微調：確保 SweetAlert2 的 actions 容器（按鈕區）在 Loading 時不佔空間 */
+.swal2-actions.swal2-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 50px;
+}
+
+/* 針對 SweetAlert2 的背景遮罩進行美化 */
+.swal2-container.swal2-backdrop-show {
+  /* 1. 加深灰色：原本通常是 0.4，改為 0.7 會深很多，更有沉浸感 */
+  background: rgba(0, 0, 0, 0.6) !important;
+}

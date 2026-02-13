@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>基本資料填寫</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="main-wrapper">
+      <div class="header">
+        <img src="img/Logo@3x.png" alt="Logo" />
+      </div>
+      <div class="header-text">
+        <div class="line-1">恭 喜 完 成 集 章</div>
+
+        <div class="sub-text-top">請 填 寫 基 本 資 料 後 ，</div>
+        <div class="sub-text-bottom">即 可 至 服 務 台 兌 換 好 禮</div>
+      </div>
+      <div class="form-container">
+        <div class="title">基 本 資 料</div>
+
+        <form
+          id="myForm"
+          action="https://docs.google.com/forms/d/e/1FAIpQLSddhS-Y3bcRne4qiiH3tC628ovS3EDkocR90aYEpIhok2CYOg/formResponse"
+          method="POST"
+          target="hidden_iframe"
+        >
+          <label for="input-name"
+            >★ 姓 名 / Name <span class="en-text">(必填)</span></label
+          >
+          <input type="text" id="input-name" name="entry.1161408526" />
+
+          <label for="input-phone"
+            >★ 手 機 / Phone <span class="en-text">(必填)</span></label
+          >
+          <input type="tel" id="input-phone" name="entry.1482757782" />
+
+          <label for="input-email"
+            >★ 信 箱 / Email <span class="en-text">(必填)</span></label
+          >
+          <input type="email" id="input-email" name="entry.1863658734" />
+
+          <div class="custom-select-wrapper">
+            <label for="selectBox"
+              >★ 喜 愛 攤 位 <span class="en-text">(必填)</span></label
+            >
+            <div class="select-box" id="selectBox">
+              <span id="selectedValue">請選擇...</span>
+              <div class="arrow-down"></div>
+            </div>
+            <ul class="options-list" id="optionsList">
+              <li data-value="M1">M1</li>
+              <li data-value="M2">M2</li>
+              <li data-value="M3">M3</li>
+              <li data-value="M4">M4</li>
+              <li data-value="M5">M5</li>
+              <li data-value="S1">S1</li>
+              <li data-value="S2">S2</li>
+              <li data-value="S3">S3</li>
+              <li data-value="S4">S4</li>
+              <li data-value="S5">S5</li>
+            </ul>
+            <input
+              type="hidden"
+              name="entry.174193664"
+              id="hiddenInput"
+              required
+            />
+          </div>
+
+          <label class="tight-label" for="input-company"
+            >公 司 或 店 家 名 稱 / Company</label
+          >
+          <input type="text" id="input-company" name="entry.2056910864" />
+
+          <label class="tight-label-UnifiedBusinessNumber" for="input-ubn">
+            統 一 編 號 / Unified Business Number
+          </label>
+          <input
+            type="tel"
+            id="input-ubn"
+            name="entry.592871638"
+            maxlength="8"
+            placeholder="請輸入8位數字"
+          />
+
+          <div class="consent-container">
+            <div class="checkbox-row">
+              <input type="checkbox" id="consentCheck" />
+              <label for="consentCheck" class="consent-label">
+                我已詳細閱讀並同意蒐集個人資料提供同意書
+              </label>
+            </div>
+
+            <hr class="consent-divider" />
+
+            <div class="modal-trigger" id="openModal">
+              蒐集個人資料告知事項暨個人資料提供同意書
+            </div>
+          </div>
+        </form>
+      </div>
+      <div id="consentModal" form="myForm" class="modal-overlay">
+        <div class="modal-content">
+          <span class="close-btn" id="closeModal">&times;</span>
+          <div class="modal-body">
+            <img
+              src="img/Content@3x.png"
+              alt="個人資料提供同意書"
+              class="consent-img"
+            />
+          </div>
+        </div>
+      </div>
+      <button type="submit" form="myForm" class="submit-btn">送出</button>
+    </div>
+    <script src="main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript">
+      var submitted = false;
+    </script>
+    <iframe
+      name="hidden_iframe"
+      id="hidden_iframe"
+      style="display: none"
+      onload="
+        if (typeof submitted !== 'undefined' && submitted) {
+          clearTimeout(timeoutTimer);
+          Swal.fire({
+            title: '報名成功！',
+            text: '感謝您的參與，頁面即將重新整理',
+            icon: 'success',
+            iconColor: '#a5dc86',
+            confirmButtonText: '太棒了',
+            background: '#ffffff',
+            // 這裡套用我們新定義的『成功專用』類別
+            customClass: {
+              popup: 'swal-base-popup',
+              title: 'swal-success-title',
+              confirmButton: 'swal-base-button swal-success-button',
+              htmlContainer: 'swal-success-content',
+            },
+            showClass: {
+              popup: 'animate__animated animate__fadeInUp animate__faster',
+            },
+          }).then(() => {
+            window.location.reload();
+          });
+        }
+      "
+    ></iframe>
+  </body>
+</html>
