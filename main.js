@@ -46,16 +46,22 @@ document.addEventListener("DOMContentLoaded", () => {
     selectBox.classList.remove("open");
   });
 
-  // --- 2. Modal 彈窗邏輯 ---
   if (openBtn) {
-    openBtn.onclick = () => {
-      modal.classList.add("show"); // 加上 show 類別觸發動畫
+    openBtn.onclick = (e) => {
+      e.preventDefault();
+      modal.classList.add("show");
+      // 鎖定背景，防止出現黑框或背景跳動
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100%";
     };
   }
 
   if (closeBtn) {
     closeBtn.onclick = () => {
-      modal.classList.remove("show"); // 移除 show 類別縮回
+      modal.classList.remove("show");
+      // 恢復背景捲動
+      document.body.style.overflow = "";
+      document.body.style.height = "";
     };
   }
 
